@@ -20,3 +20,22 @@ def create(name):
     except ClientError as e:
         #log error
         logging.error(e)
+
+
+def uploadFile(name, fileName, dir):
+    try:
+        #access api
+        s3 = boto3.resource('s3')
+
+        #open file
+        file = open(dir + fileName, 'rb')
+
+        #begin upload
+        s3.Bucket(name).put_object(Key=fileName, Body=file)
+
+        print(fileName + " uploaded")
+        return True
+    except ClientError as e:
+        logging.error(e)
+        return False
+    
