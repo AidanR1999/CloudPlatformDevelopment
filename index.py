@@ -10,3 +10,4 @@ studentId = secrets['studentId']
 
 bucket = s3BucketManager.create("audio-bucket-" + studentId)
 queue = sqsQueueManager.create("audio-queue-" + studentId)
+table = dynamoDbManager.create("audio-table-" + studentId)
