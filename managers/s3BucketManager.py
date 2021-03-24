@@ -38,4 +38,3 @@ def uploadFile(name, fileName, dir):
     except ClientError as e:
         logging.error(e)
         return False
-    

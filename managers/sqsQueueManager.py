@@ -27,22 +27,21 @@ def getUrl(name):
     return res['QueueUrl']
 
 
-def sendMessage(fileName, url):
+def sendMessage(fileName, queueUrl):
     #access SQS api
     sqs = boto3.client('sqs')
 
     # Send message to SQS queue
     sqs.send_message(
-        QueueUrl=url,
-        DelaySeconds=10,
+        QueueUrl=queueUrl,
         MessageAttributes={
-            'Title': {
+            'FileName': {
                 'DataType': 'String',
-                'StringValue': fileName + " uploaded"
+                'StringValue': fileName
             }
         },
         MessageBody=(
-            fileName + " has been uploaded successfully"
+            fileName
         )
     )
 

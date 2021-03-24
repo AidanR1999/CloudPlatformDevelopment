@@ -1,3 +1,4 @@
+#imports
 import json
 import time
 import managers.s3BucketManager as _s3BucketManager
@@ -22,20 +23,26 @@ table = _dynamoDbManager.create(tableName)
 #get queue url
 queueUrl = _sqsQueueManager.getUrl(queueName)
 
-#upload audio files
+#upload all audio files
 for i in range(5):
+    #define fileName
     fileName = "Audio" + str(i + 1) + ".mp3"
     
-    #if(i != 0):
-    #    time.sleep(30)
+    #sleep for 30 seconds
+    if(i != 0):
+        time.sleep(30)
     
+    #upload file to bucket
     success = _s3BucketManager.uploadFile(
         "audio-bucket-" + studentId,
         fileName,
         "./audioTracks/"
     )
 
+    #send message on successful upload
     if(success):
         _sqsQueueManager.sendMessage(fileName, queueUrl)
     else:
         print("upload failed, moving to next audio file")
+
+print('Upload complete')
