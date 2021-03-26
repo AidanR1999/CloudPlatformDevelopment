@@ -10,16 +10,23 @@ def create(name):
     #template url
     url = 'https://s3.us-west-2.amazonaws.com/cloudformation-templates-us-west-2/DynamoDB_Table.template'
 
-    #create table using cloudformation template
-    response = cf.create_stack(
-        StackName=name,
-        TemplateURL=url,
-        Parameters=[
-            {
-                'ParameterKey':'HashKeyElementName',
-                'ParameterValue':'trackname'
-            }
-        ]
-    )
+    try:
+        #create table using cloudformation template
+        response = cf.create_stack(
+            StackName=name,
+            TemplateURL=url,
+            Parameters=[
+                {
+                    'ParameterKey':'HashKeyElementName',
+                    'ParameterValue':'trackname'
+                }
+            ]
+        )
 
-    return response
+        #print
+        print(name + ' has been created successfully')
+        return response
+
+    #print error if stack already exists
+    except Exception as e:
+        print("Error: Stack already created")
