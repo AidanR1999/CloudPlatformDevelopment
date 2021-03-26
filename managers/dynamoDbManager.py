@@ -4,44 +4,22 @@ import boto3
 from botocore.exceptions import ClientError
 
 def create(name):
-    #access dynamoDb api
-    db = boto3.client('dynamodb')
+    #access cloud formation api
+    cf = boto3.client('cloudformation')
 
-    try:
-        #create table
-        table = db.create_table(
-            TableName=name,
-            KeySchema=[
-                {
-                    'AttributeName': 'trackname',
-                    'KeyType': 'HASH'
-                },
-                {
-                    'AttributeName': 'sentiment',
-                    'KeyType': 'RANGE'
-                }
-            ],
-            AttributeDefinitions=[
-                {
-                    'AttributeName': 'trackname',
-                    'AttributeType': 'S'
-                },
-                {
-                    'AttributeName': 'sentiment',
-                    'AttributeType': 'S'
-                }
-            ],
-            ProvisionedThroughput={
-                'ReadCapacityUnits': 5,
-                'WriteCapacityUnits': 5
+    #template url
+    url = 'https://s3.us-west-2.amazonaws.com/cloudformation-templates-us-west-2/DynamoDB_Table.template'
+
+    #create table using cloudformation template
+    response = cf.create_stack(
+        StackName=name,
+        TemplateUrl=url,
+        Parameters=[
+            {
+                'ParameterKey':'HashKeyElementName',
+                'ParameterValue':'trackname'
             }
-        )
+        ]
+    )
 
-        #wait for table to be created
-        table.meta.client.get_waiter('table_exists').wait(TableName=name)
-
-        print(name + "created successfully")
-        return table
-
-    except ClientError as e:
-        logging.error(e)
+    return response
