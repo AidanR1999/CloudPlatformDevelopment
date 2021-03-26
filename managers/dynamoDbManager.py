@@ -13,7 +13,7 @@ def create(name):
     #create table using cloudformation template
     response = cf.create_stack(
         StackName=name,
-        TemplateUrl=url,
+        TemplateURL=url,
         Parameters=[
             {
                 'ParameterKey':'HashKeyElementName',
