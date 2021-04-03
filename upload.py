@@ -15,11 +15,6 @@ bucketName = "audio-bucket-" + studentId
 queueName = "audio-queue-" + studentId
 tableName = "audio-table-" + studentId
 
-#create resources required
-bucket = _s3BucketManager.create(bucketName)
-queue = _sqsQueueManager.create(queueName)
-table = _dynamoDbManager.create(tableName)
-
 #get queue url
 queueUrl = _sqsQueueManager.getUrl(queueName)
 
