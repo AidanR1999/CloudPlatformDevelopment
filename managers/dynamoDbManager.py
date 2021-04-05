@@ -3,6 +3,9 @@ import logging
 import boto3
 from botocore.exceptions import ClientError
 
+#creates dynamoDb Table using Cloudformation template
+#TAKES name : string
+#RETURNS response : object
 def create(name):
     #access cloud formation api
     cf = boto3.client('cloudformation')

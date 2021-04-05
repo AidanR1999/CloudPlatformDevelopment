@@ -3,6 +3,9 @@ import logging
 import boto3
 from botocore.exceptions import ClientError
 
+#creates S3 bucket on AWS
+#TAKES name : string
+#RETURNS bucket : object
 def create(name):
     #access S3 api
     s3 = boto3.client('s3')
@@ -21,7 +24,9 @@ def create(name):
         #log error
         logging.error(e)
 
-
+#uploads file to S3 bucket
+#TAKES name : string
+#RETURNS success : boolean
 def uploadFile(name, fileName, dir):
     try:
         #access api

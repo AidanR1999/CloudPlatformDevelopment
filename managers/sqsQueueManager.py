@@ -3,6 +3,9 @@ import logging
 import boto3
 from botocore.exceptions import ClientError
 
+#creates SQS queue on AWS
+#TAKES name : string
+#RETURNS queue : object
 def create(name):
     #access SQS api
     sqs = boto3.client('sqs')
@@ -17,7 +20,9 @@ def create(name):
         #log error
         logging.error(e)
 
-
+#gets URL for queue
+#TAKES name : string
+#RETURNS url : string
 def getUrl(name):
     #access SQS api
     sqs = boto3.client('sqs')
@@ -26,7 +31,9 @@ def getUrl(name):
     res = sqs.get_queue_url(QueueName=name)
     return res['QueueUrl']
 
-
+#sends SQS message to queue
+#TAKES fileName : string, queueUrl : string
+#RETURNS void
 def sendMessage(fileName, queueUrl):
     #access SQS api
     sqs = boto3.client('sqs')
