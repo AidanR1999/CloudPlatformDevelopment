@@ -4,7 +4,6 @@ import time
 import os
 import managers.s3BucketManager as _s3BucketManager
 import managers.sqsQueueManager as _sqsQueueManager
-import managers.dynamoDbManager as _dynamoDbManager
 
 #get student ID from app secrets
 file = open('appsecrets.json')
@@ -24,7 +23,7 @@ tableName = "audio-table-" + studentId
 queueUrl = _sqsQueueManager.getUrl(queueName)
 
 #upload all audio files
-for i in range(5):
+for i in range(len(files)):
     #define fileName
     fileName = files[i]
     

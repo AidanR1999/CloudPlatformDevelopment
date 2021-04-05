@@ -1,6 +1,5 @@
 #imports
 import json
-import time
 import managers.s3BucketManager as _s3BucketManager
 import managers.sqsQueueManager as _sqsQueueManager
 import managers.dynamoDbManager as _dynamoDbManager
