@@ -1,6 +1,7 @@
 #imports
 import json
 import time
+import os
 import managers.s3BucketManager as _s3BucketManager
 import managers.sqsQueueManager as _sqsQueueManager
 import managers.dynamoDbManager as _dynamoDbManager
@@ -9,6 +10,10 @@ import managers.dynamoDbManager as _dynamoDbManager
 file = open('appsecrets.json')
 secrets = json.load(file)
 studentId = secrets['studentId']
+
+#define dir
+dir = "./audioTracks/"
+files = os.listdir(dir)
 
 #define resource names
 bucketName = "audio-bucket-" + studentId
@@ -21,7 +26,7 @@ queueUrl = _sqsQueueManager.getUrl(queueName)
 #upload all audio files
 for i in range(5):
     #define fileName
-    fileName = "Audio" + str(i + 1) + ".mp3"
+    fileName = files[i]
     
     #sleep for 30 seconds
     if(i != 0):
@@ -31,7 +36,7 @@ for i in range(5):
     success = _s3BucketManager.uploadFile(
         "audio-bucket-" + studentId,
         fileName,
-        "./audioTracks/"
+        dir
     )
 
     #send message on successful upload
