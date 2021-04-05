@@ -7,7 +7,7 @@ def lambda_handler(event, context):
     
     #get object location
     location = 'eu-west-2'
-    bucket_name  = "audio-bucket-s1911669"
+    bucket_name  = "audio-bucket"
     fileName = event['Records'][0]['body']
     
     #define public URLs
