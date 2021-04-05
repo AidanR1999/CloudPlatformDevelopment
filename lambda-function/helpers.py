@@ -13,7 +13,11 @@ def transcribe(fileName, objectUri):
     #check if job exists
     try:
         job = getJob(fileName)
-        return job
+        
+        #delete job
+        transcribe.delete_transcription_job(
+            TranscriptionJobName=fileName
+        )
     except Exception as e:
         print(e)
     
@@ -46,9 +50,6 @@ def getJob(name):
 #TAKES job : object
 #RETURNS text : string
 def getTranscription(job):
-    #get client
-    s3 = boto3.client('s3')
-    
     #get job output
     uri = job['TranscriptionJob']['Transcript']['TranscriptFileUri']
     

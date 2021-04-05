@@ -15,7 +15,7 @@ def lambda_handler(event, context):
     objectUri = "https://s3-%s.amazonaws.com/%s/%s" % (location, bucket_name, fileName)
     
     #other dependencies
-    tableName = "audio-table-s1911669"
+    tableName = "audio-table"
     phoneNo = "+44ZZZZZZZZZZ"
     
     #begin transcription job
